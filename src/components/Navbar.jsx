@@ -6,14 +6,35 @@ import { HomeOutlined, MoneyCollectOutlined, BulbOutlined, FundOutlined, WalletO
 import icon from '../images/cryptocurrency.png';
 
 const Navbar = () => {
+  const [activeMenu, setActiveMenu] = useState(true);
+  const [screenSize, setScreenSize] = useState(undefined);
+
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenSize <= 800) {
+      setActiveMenu(false);
+         } else {
+      setActiveMenu(true);
+    }
+  }, [screenSize]);
+
    return (
     <div className="nav-container">
     <div className="logo-container">
       <Avatar src={icon} size="large" />
       <Typography.Title level={2} className="logo"><Link to="/">SectorX</Link></Typography.Title>
+      <Button className="menu-control-container" onClick={() => setActiveMenu(!activeMenu)}><MenuOutlined /></Button  >
     </div>
-    <div>
-    <Menu theme="dark">
+    {activeMenu && (
+     <Menu theme="dark">
       <Menu.Item icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
       </Menu.Item>
@@ -30,9 +51,9 @@ const Navbar = () => {
         <Link to="/wallet">Wallet</Link>
       </Menu.Item>
     </Menu>
-    </div>
+    )}
   </div>
-  )
+  );
 };
 
 export default Navbar;

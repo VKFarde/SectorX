@@ -14,9 +14,9 @@ const { Option } = Select;
 
 const CryptoDetails = () => {
   const { coinId } = useParams();
-  const [timePeriod, setTimeperiod] = useState('7d');
+  const [timeperiod, setTimeperiod] = useState('7d');
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
-  const { data: coinHistory } = useGetCryptoHistoryQuery(coinId, timePeriod);
+  const { data: coinHistory } = useGetCryptoHistoryQuery(coinId, timeperiod);
   const cryptoDetails = data?.data?.coin;
 
   if (isFetching) return <Loader />;
@@ -55,7 +55,7 @@ const CryptoDetails = () => {
        >
       {time.map((date) => <Option key={date}>{date}</Option>)}
       </Select>
-      <LineChart  coinHistory = {coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name}></LineChart>
+      <LineChart coinHistory = {coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name}></LineChart>
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -105,6 +105,6 @@ const CryptoDetails = () => {
       </Col>
     </Col>
   )
-};
+}
 
 export default CryptoDetails;
