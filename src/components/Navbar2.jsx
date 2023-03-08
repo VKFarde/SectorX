@@ -1,56 +1,57 @@
-import { HiMenuAlt4 } from "react-icons/hi";
-import { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import { Button, Menu, Typography, Avatar, ConfigProvider } from 'antd';
+import { Link } from 'react-router-dom';
+import { HomeOutlined, MoneyCollectOutlined, BulbOutlined, FundOutlined, WalletOutlined, MenuOutlined, BgColorsOutlined } from '@ant-design/icons';
 
-import logo from "../../images/logo.png";
-
-const NavItem = ({ title, classprops }) => (
-  <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
-);
+import icon from '../images/cryptocurrency.png';
+import { PresetColorTypes } from 'antd/es/_util/colors';
 
 const Navbar2 = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(true);
+  const [screenSize, setScreenSize] = useState(undefined);
 
-  return (
-    <nav className="bg-gradient-to-r from-rose-300 to-rose-50" >
-      <div className="bg-gradient-to-r from-indigo-500 via purple-50 to pink-50..."></div>
-      <nav className="w-full flex md:justify-left justify-between items-center p-4">
-        <div className="md:flex-[0.5] flex-initial justify-center items-center">
-          <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        </div>
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
 
-        <ul className="text-black md:flex hidden list-none flex-row justify-between items-center flex-initial">
-          {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
-            <NavItem key={item + index} title={item} />
-          ))}
-          <li className="bg-[#ce4a77] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#da7899] ">
+    window.addEventListener('resize', handleResize);
 
-            Login
-          </li>
-        </ul>
-        <div className="flex relative">
-          {toggleMenu
-            ? <AiOutlineClose fontSize={30} className="text-rose md:hidden cursor-pointer" onClick={() => setToggleMenu(false)} />
-            : <HiMenuAlt4 fontSize={30} className="text-rose md:hidden cursor-pointer" onClick={() => setToggleMenu(true)} />}
-          {toggleMenu && (
-            <ul
-              className="z-10 fixed top-0 -right-2 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none
-             flex flex-col justify-start items-end rounded-md blue-glassmorphism text-black animate-slide-in"
-            >
-              <li className="text-xl w-full my-2">
-                <AiOutlineClose onClick={() => setToggleMenu(false)} />
-              </li>
-              {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
-                <NavItem key={item + index} title={item} classprops="my-2 text-lg" />
-              ))}
-            </ul>
-          )}
-        </div>
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-      </nav>
-    </nav>
+  useEffect(() => {
+    if (screenSize <= 800) {
+      setActiveMenu(false);
+         } else {
+      setActiveMenu(true);
+    }
+  }, [screenSize]);
+
+   return (
+    <div className="nav-container" >
+    <div className="logo-container" >
+      <Avatar shape="circle" src={icon} size={100} />
+      <Typography.Title level={2} className="logo"><Link to="/">SectorX</Link></Typography.Title>
+      <Button className="menu-control-container" onClick={() => setActiveMenu(!activeMenu)}><MenuOutlined /></Button  >
+    </div>
+    {activeMenu && (
+     <Menu triggerSubMenuAction = "hover" theme='dark'>
+      <Menu.Item icon={<HomeOutlined />}>
+        <Link to="/">Home</Link>
+      </Menu.Item>
+      <Menu.Item icon={<FundOutlined />}>
+        <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+      </Menu.Item>
+      <Menu.Item icon={<BulbOutlined />}>
+        <Link to="/news">News</Link>
+      </Menu.Item>
+      <Menu.Item icon={<WalletOutlined />}>
+        <Link to="/wallet">Wallet</Link>
+      </Menu.Item>
+    </Menu>
+    )}
+  </div>
   );
 };
-
 
 export default Navbar2;

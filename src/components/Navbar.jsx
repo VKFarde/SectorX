@@ -28,8 +28,8 @@ const Navbar = () => {
 
    return (
     <div className="nav-container">
-    <div className="logo-container">
-      <Avatar src={icon} size="large" />
+    <div className="logo-container" >
+      <Avatar shape="circle" src={icon} size={100} />
       <Typography.Title level={2} className="logo"><Link to="/">SectorX</Link></Typography.Title>
       <Button className="menu-control-container" onClick={() => setActiveMenu(!activeMenu)}><MenuOutlined /></Button  >
     </div>
@@ -40,9 +40,6 @@ const Navbar = () => {
       </Menu.Item>
       <Menu.Item icon={<FundOutlined />}>
         <Link to="/cryptocurrencies">Cryptocurrencies</Link>
-      </Menu.Item>
-      <Menu.Item icon={<MoneyCollectOutlined />}>
-        <Link to="/exchanges">Exchanges</Link>
       </Menu.Item>
       <Menu.Item icon={<BulbOutlined />}>
         <Link to="/news">News</Link>

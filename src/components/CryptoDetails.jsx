@@ -14,16 +14,14 @@ const { Option } = Select;
 
 const CryptoDetails = () => {
   const { coinId } = useParams();
-  const [timeperiod, setTimeperiod] = useState('24h');
+  const [timeperiod, setTimeperiod] = useState('7d');
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
-  const { data: coinHistory } = useGetCryptoHistoryQuery(coinId, timeperiod);
+  const { data: coinHistory } = useGetCryptoHistoryQuery({ coinId, timeperiod });
   const cryptoDetails = data?.data?.coin;
 
-  console.log(coinHistory);
-  
   if (isFetching) return <Loader />;
 
-  const time = ['3h', '24h', '7d', '30d', '3m','1y' ,'3y', '5y'];
+  const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', ];
 
   const stats = [
     { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
@@ -41,9 +39,7 @@ const CryptoDetails = () => {
     { title: 'Circulating Supply', value: `$ ${cryptoDetails?.supply?.circulating && millify(cryptoDetails?.supply?.circulating)}`, icon: <ExclamationCircleOutlined /> },
   ];
 
-  
- 
-  return ( 
+  return (
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
@@ -51,15 +47,10 @@ const CryptoDetails = () => {
         </Title>
         <p>{cryptoDetails.name} live price in US Dollar (USD). View value statistics, market cap and supply.</p>
       </Col>
-      <Select 
-      defaultValue="7d" 
-      className="select-timeperiod" 
-      placeholder="Select Timeperiod" 
-      onChange={(value) => setTimeperiod(value)}
-       >
-      {time.map((date) => <Option key={date}>{date}</Option>)}
-      </Select>/
-      {/* <LineChart coinHistory = {coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name}></LineChart> */}
+      <Select defaultValue="7d" className="select-timeperiod" placeholder="Select Timeperiod" onChange={(value) => setTimeperiod(value)}>
+        {time.map((date) => <Option key={date}>{date}</Option>)}
+      </Select>
+      <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} />
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -69,10 +60,10 @@ const CryptoDetails = () => {
           {stats.map(({ icon, title, value }) => (
             <Col className="coin-stats">
               <Col className="coin-stats-name">
-                <Text>{ icon }</Text>
-                <Text>{ title }</Text>
+                <Text>{icon}</Text>
+                <Text>{title}</Text>
               </Col>
-              <Text className="stats">{ value }</Text>
+              <Text className="stats">{value}</Text>
             </Col>
           ))}
         </Col>
@@ -99,7 +90,7 @@ const CryptoDetails = () => {
         </Row>
         <Col className="coin-links">
           <Title level={3} className="coin-details-heading">{cryptoDetails.name} Links</Title>
-          {cryptoDetails.links?.map( (link) => (
+          {cryptoDetails.links?.map((link) => (
             <Row className="coin-link" key={link.name}>
               <Title level={5} className="link-name">{link.type}</Title>
               <a href={link.url} target="_blank" rel="noreferrer">{link.name}</a>
@@ -108,7 +99,7 @@ const CryptoDetails = () => {
         </Col>
       </Col>
     </Col>
-  )
-}
+  );
+};
 
 export default CryptoDetails;

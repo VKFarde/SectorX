@@ -19,6 +19,7 @@ const News = ({ simplified }) => {
   if (!cryptoNews?.value) return <Loader />;
 
   return (
+    <div className='news'>
     <Row gutter={[24, 24]}>
       {!simplified && (
         <Col span={24}>
@@ -29,6 +30,7 @@ const News = ({ simplified }) => {
             optionFilterProp="children"
             onChange={(value) => setNewsCategory(value)}
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            
           >
             <Option value="Cryptocurency">Cryptocurrency</Option>
             {data?.data?.coins?.map((currency) => <Option value={currency.name}>{currency.name}</Option>)}
@@ -56,6 +58,7 @@ const News = ({ simplified }) => {
         </Col>
       ))}
     </Row>
+  </div>
   );
 };
 

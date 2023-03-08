@@ -89,9 +89,9 @@ const Wallet = () => {
             
                <button
                   type="button"
-                  //onClick={handleSubmit}
+                 // onClick={handleSubmit}
                   
-                  //className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
+                // className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
                  >
                   <li className="bg-[#ce4a77] py-0 px-1 mx-0 rounded-full cursor-pointer hover:bg-[#da7899] ">
                   Send now
