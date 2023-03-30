@@ -1,9 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router,Switch, Route, Link } from 'react-router-dom';
-import { Layout, Typography, Space } from 'antd';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Layout, Typography, Space } from "antd";
 
-import { Exchanges, Homepage, News, Cryptocurrencies, CryptoDetails, Wallet, Navbar, Navbar2 } from './components';
-import './App.css';
+import {
+  Exchanges,
+  Homepage,
+  News,
+  Cryptocurrencies,
+  CryptoDetails,
+  Wallet,
+  Navbar,
+  Navbar2,
+} from "./components";
+import "./App.css";
 
 const App = () => (
   <div className="app">
@@ -18,7 +27,7 @@ const App = () => (
               <Homepage />
             </Route>
             <Route exact path="/cryptocurrencies">
-              <Cryptocurrencies />   
+              <Cryptocurrencies />
             </Route>
             <Route exact path="/crypto/:coinId">
               <CryptoDetails />
@@ -33,10 +42,17 @@ const App = () => (
         </div>
       </Layout>
       <div className="footer">
-        <Typography.Title level={5} style={{ color: 'white', textAlign: 'center' }}>Copyright © 2022
-          <Link to="/"> <br />
+        <Typography.Title
+          level={5}
+          style={{ color: "white", textAlign: "center" }}
+        >
+          Copyright © 2023
+          <Link to="/">
+            {" "}
+            <br />
             SectorX Inc.
-          </Link> <br />
+          </Link>{" "}
+          <br />
           All Rights Reserved.
         </Typography.Title>
         <Space>

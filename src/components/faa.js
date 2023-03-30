@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import HTMLReactParser from "html-react-parser";
 import { useParams } from "react-router-dom";
 import millify from "millify";
@@ -22,7 +21,6 @@ import {
 } from "../services/cryptoApi";
 import Loader from "./Loader";
 import LineChart from "./LineChart";
-import LineChart2 from "./LineChart2";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -35,9 +33,6 @@ const CryptoDetails = () => {
     coinId,
     timeperiod,
   });
-
-  console.log(coinHistory);
-
   const cryptoDetails = data?.data?.coin;
 
   if (isFetching) return <Loader />;
@@ -131,12 +126,11 @@ const CryptoDetails = () => {
           <Option key={date}>{date}</Option>
         ))}
       </Select>
-      <LineChart2
+      <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails?.price)}
         coinName={cryptoDetails?.name}
-      ></LineChart2>
-      {/* <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} />  */}
+      />
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">

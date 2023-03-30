@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Menu, Typography, Avatar, ConfigProvider } from 'antd';
-import { Link } from 'react-router-dom';
-import { HomeOutlined, MoneyCollectOutlined, BulbOutlined, FundOutlined, WalletOutlined, MenuOutlined, BgColorsOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from "react";
+import { Button, Menu, Typography, Avatar, ConfigProvider } from "antd";
+import { Link } from "react-router-dom";
+import {
+  HomeOutlined,
+  MoneyCollectOutlined,
+  BulbOutlined,
+  FundOutlined,
+  WalletOutlined,
+  MenuOutlined,
+  BgColorsOutlined,
+} from "@ant-design/icons";
 
-import icon from '../images/cryptocurrency.png';
-import { PresetColorTypes } from 'antd/es/_util/colors';
+import icon from "../images/cryptocurrency.png";
+import { PresetColorTypes } from "antd/es/_util/colors";
 
 const Navbar2 = () => {
   const [activeMenu, setActiveMenu] = useState(true);
@@ -13,44 +21,51 @@ const Navbar2 = () => {
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     if (screenSize <= 800) {
       setActiveMenu(false);
-         } else {
+    } else {
       setActiveMenu(true);
     }
   }, [screenSize]);
 
-   return (
-    <div className="nav-container" >
-    <div className="logo-container" >
-      <Avatar shape="circle" src={icon} size={100} />
-      <Typography.Title level={2} className="logo"><Link to="/">SectorX</Link></Typography.Title>
-      <Button className="menu-control-container" onClick={() => setActiveMenu(!activeMenu)}><MenuOutlined /></Button  >
+  return (
+    <div className="nav-container">
+      <div className="logo-container">
+        <Avatar shape="circle" src={icon} size={100} />
+        <Typography.Title level={2} className="logo">
+          <Link to="/">SectorX</Link>
+        </Typography.Title>
+        <Button
+          className="menu-control-container"
+          onClick={() => setActiveMenu(!activeMenu)}
+        >
+          <MenuOutlined />
+        </Button>
+      </div>
+      {activeMenu && (
+        <Menu triggerSubMenuAction="hover">
+          <Menu.Item icon={<HomeOutlined />}>
+            <Link to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item icon={<FundOutlined />}>
+            <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+          </Menu.Item>
+          <Menu.Item icon={<BulbOutlined />}>
+            <Link to="/news">News</Link>
+          </Menu.Item>
+          <Menu.Item icon={<WalletOutlined />}>
+            <Link to="/wallet">Wallet</Link>
+          </Menu.Item>
+        </Menu>
+      )}
     </div>
-    {activeMenu && (
-     <Menu triggerSubMenuAction = "hover" theme='dark'>
-      <Menu.Item icon={<HomeOutlined />}>
-        <Link to="/">Home</Link>
-      </Menu.Item>
-      <Menu.Item icon={<FundOutlined />}>
-        <Link to="/cryptocurrencies">Cryptocurrencies</Link>
-      </Menu.Item>
-      <Menu.Item icon={<BulbOutlined />}>
-        <Link to="/news">News</Link>
-      </Menu.Item>
-      <Menu.Item icon={<WalletOutlined />}>
-        <Link to="/wallet">Wallet</Link>
-      </Menu.Item>
-    </Menu>
-    )}
-  </div>
   );
 };
 
